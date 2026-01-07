@@ -5,58 +5,41 @@
 
 ### 🏗️ Technical Architecture
 - **Frontend**: React (Vite) + Tailwind CSS + HeroIcons.
-- **Backend**: FastAPI (Python) + SQLAlchemy ORM.
+- **Backend**: FastAPI (Python) + SQLAlchemy ORM (Custom) | **Auth**: Supabase Integration (Provided Jan 7).
 - **Task Queue**: Celery + Redis (for async AI simulations).
-- **Database**: PostgreSQL.
+- **Database**: PostgreSQL (Docker) & Supabase for user auth.
 - **Storage**: MinIO (S3-compatible) for audio files and assets.
 - **Infrastructure**: Fully Dockerized (6 services).
 
 ---
 
 ## 🎨 Design System & UI Details
-Adherence to these specs is **critical** for brand consistency.
-
 ### 1. Brand Philosophy
 - **Aesthetic**: Futuristic sci-fi, glassmorphism, and high-end studio hardware feel.
 - **Tone**: Professional, precise, and tech-forward.
-- **"The Activation Sequence"**: Login/Signup isn't a form; it's a "system initialization."
+- **"The Activation Sequence"**: Login/Signup is a "system initialization" flow.
 
 ### 2. Color Palette (Dark Mode Primary)
-- **Void Black (#0A0A0F)**: Primary background. Deep, immersive.
-- **Electric Cyan (#00F2FE)**: Brand primary. Actions, highlights, active states.
-- **Signal Pink (#FF3366)**: Accent color. Alerts, "Live" indicators, errors.
-- **Deep Navy (#1A1A2E)**: Panels, cards, sidebars.
-- **Off-White (#EAEAEA)**: Primary text.
-- **Muted Silver (#8D8D9B)**: Secondary text/metadata.
-
-### 3. Typography
-- **Headings**: Poppins (Bold/Semi-Bold).
-- **Body/Labels**: Inter (Regular/Medium).
-- **Data/Mono**: JetBrains Mono (Technical readouts).
-
-### 4. "Wow Factor" Components
-- **The Floating Pod**: Frosted glass (`backdrop-blur-[20px]`) centered login/signup container.
-- **Track Doctor Radial**: Concentric rings visualizing Mix Clarity, Low-End, etc., with a central grade.
-- **Setlist Timeline**: Horizontal sequence with an **Energy Arc SVG** and harmonic compatibility lines.
-- **Micro-interactions**: Staggered fades, pulsing cue points, and glowing input focus borders.
+- **Void Black (#0A0A0F)**: Primary background.
+- **Electric Cyan (#00F2FE)**: Brand primary.
+- **Signal Pink (#FF3366)**: Accent color.
+- **Deep Navy (#1A1A2E)**: Panels/Cards.
 
 ---
 
-## ✅ Current Progress (Update: Jan 7, 20:18)
-- [x] **Infra**: Docker Compose service-ready. Added `web-client/Dockerfile`.
-- [x] **Auth**: "Activation Sequence" screens (Login/Signup) fully functional with generative backgrounds.
-- [x] **Dashboard**: Stat-counting Command Center implemented.
-- [x] **Module 1 (Setlist Architect)**: Timeline + Energy Arc SVG completed.
-- [x] **Module 2 (Track Doctor)**: Radial metrics + spectral scan animation completed.
-- [x] **Module 3 (Discovery Engine)**: Marketplace grid + AI seed recommendations.
-- [x] **Module 4 (Collab Hub)**: Discord-style forum/projects/messaging layout.
+## ✅ Current Progress (Update: Jan 7, 20:25)
+- [x] **Infra**: Docker Compose service-ready. Fixed `web-client` Build conflicts.
+- [x] **Auth Prototype**: "Activation Sequence" screens (Login/Signup) fully functional with generative backgrounds.
+- [x] **Modules**: Setlist Architect, Track Doctor, Discovery, and Collab Hub implemented as high-fidelity prototypes.
+- [x] **Credentials**: Supabase credentials stored in `web-client/.env` for real auth integration.
 
 ## 🏎️ Roadmap: Phase 2 (Ignition)
-1. **Auth Integration**: Connect frontend to FastAPI `/token` for real persistence.
+1. **Supabase Integration**: Replace mock login with real Supabase Auth using the provided service role and project ref.
 2. **Signal Live-Processing**: Integrate actual MinIO uploads for Track Doctor.
 3. **Interactive Visuals**: Make radial Rings clickable to show spectrum charts.
 
 ## 📍 Coding Notes & Constraints
 - **Universal CSS**: All components must use tokens defined in `index.css`.
-- **Git Strategy**: Commit every 2 mins during active work.
-- **Current SHA**: `3ef1469` (pre-snapshot update).
+- **Model Continuity**: UI Specs and System Overview are permanently baked into this file for AI resume.
+- **Git Strategy**: Commit/Push every 2 mins during active work.
+- **Current SHA**: `7478d81` -> `3ef1469` (Auth credential snapshot).
