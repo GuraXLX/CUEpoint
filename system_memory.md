@@ -1,28 +1,62 @@
 # CuePoint AI - System Memory 🧠
 
 ## 🚀 Project Overview
-**CuePoint AI** is the "Operating System for Modern Music Creators."
+**CuePoint AI** is the "Operating System for Modern Music Creators." It is a unified ecosystem for music creators, from studio to stage, leveraging AI agents to enhance creativity through four core modules: Setlist Architect, Track Doctor, Discovery Engine, and Collab Hub.
 
-## ✅ Current Progress (Update: Jan 7, 20:13)
-### Backend & Worker
-- [x] Full API and Simulation logic implemented.
-- [x] Celery tasks for Track Doctor and Setlist Architect active.
+### 🏗️ Technical Architecture
+- **Frontend**: React (Vite) + Tailwind CSS + HeroIcons.
+- **Backend**: FastAPI (Python) + SQLAlchemy ORM.
+- **Task Queue**: Celery + Redis (for async AI simulations).
+- **Database**: PostgreSQL.
+- **Storage**: MinIO (S3-compatible) for audio files and assets.
+- **Infrastructure**: Fully Dockerized (6 services).
 
-### Frontend - Complete System Build
-- [x] **Consolidated Styles**: All brand tokens and animations centralized in `index.css`.
-- [x] **Activation Sequence Auth**: Premium Login and Signup screens implemented with high-end generative backgrounds and staggered load animations.
-- [x] **Navigation**: `App.tsx` updated with all routes including the new Signup flow.
-- [x] **Dashboard**: "Command Center" UI finished with animated stats and module quick-access.
+---
 
-### Persistence & Git Sync
-- [x] **Git Automation**: System Memory is now committed and pushed to `origin/main` every 2 minutes or upon significant changes.
-- [x] **Latest SHA**: `d6d4a85` (style consolidation and activation flow).
+## 🎨 Design System & UI Details
+Adherence to these specs is **critical** for brand consistency.
 
-## 🔜 Next Steps
-1. **Frontend: Auth Integration**: Connect the Login input states to the `/token` backend endpoint.
-2. **UX Polish**: Add subtle sound cues (audio signals) for input focus and activation.
+### 1. Brand Philosophy
+- **Aesthetic**: Futuristic sci-fi, glassmorphism, and high-end studio hardware feel.
+- **Tone**: Professional, precise, and tech-forward.
+- **"The Activation Sequence"**: Login/Signup isn't a form; it's a "system initialization."
+
+### 2. Color Palette (Dark Mode Primary)
+- **Void Black (#0A0A0F)**: Primary background. Deep, immersive.
+- **Electric Cyan (#00F2FE)**: Brand primary. Actions, highlights, active states.
+- **Signal Pink (#FF3366)**: Accent color. Alerts, "Live" indicators, errors.
+- **Deep Navy (#1A1A2E)**: Panels, cards, sidebars.
+- **Off-White (#EAEAEA)**: Primary text.
+- **Muted Silver (#8D8D9B)**: Secondary text/metadata.
+
+### 3. Typography
+- **Headings**: Poppins (Bold/Semi-Bold).
+- **Body/Labels**: Inter (Regular/Medium).
+- **Data/Mono**: JetBrains Mono (Technical readouts).
+
+### 4. "Wow Factor" Components
+- **The Floating Pod**: Frosted glass (`backdrop-blur-[20px]`) centered login/signup container.
+- **Track Doctor Radial**: Concentric rings visualizing Mix Clarity, Low-End, etc., with a central grade.
+- **Setlist Timeline**: Horizontal sequence with an **Energy Arc SVG** and harmonic compatibility lines.
+- **Micro-interactions**: Staggered fades, pulsing cue points, and glowing input focus borders.
+
+---
+
+## ✅ Current Progress (Update: Jan 7, 20:18)
+- [x] **Infra**: Docker Compose service-ready. Added `web-client/Dockerfile`.
+- [x] **Auth**: "Activation Sequence" screens (Login/Signup) fully functional with generative backgrounds.
+- [x] **Dashboard**: Stat-counting Command Center implemented.
+- [x] **Module 1 (Setlist Architect)**: Timeline + Energy Arc SVG completed.
+- [x] **Module 2 (Track Doctor)**: Radial metrics + spectral scan animation completed.
+- [x] **Module 3 (Discovery Engine)**: Marketplace grid + AI seed recommendations.
+- [x] **Module 4 (Collab Hub)**: Discord-style forum/projects/messaging layout.
+
+## 🏎️ Roadmap: Phase 2 (Ignition)
+1. **Auth Integration**: Connect frontend to FastAPI `/token` for real persistence.
+2. **Signal Live-Processing**: Integrate actual MinIO uploads for Track Doctor.
+3. **Interactive Visuals**: Make radial Rings clickable to show spectrum charts.
 
 ## 📍 Coding Notes & Constraints
-- **Universal CSS**: Use `index.css` for all shared brand tokens.
-- **Micro-interactions**: Every button and card must have a hover/active state (hover:scale-105).
-- **Security**: The "Security Key" field includes a toggle for visual feedback.
+- **Universal CSS**: All components must use tokens defined in `index.css`.
+- **Git Strategy**: Commit every 2 mins during active work.
+- **Current SHA**: `3ef1469` (pre-snapshot update).
