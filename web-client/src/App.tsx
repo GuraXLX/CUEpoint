@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
+import Signup from './pages/Signup'
 import SetlistArchitect from './pages/SetlistArchitect'
 import TrackDoctor from './pages/TrackDoctor'
 import DiscoveryEngine from './pages/DiscoveryEngine'
@@ -12,6 +13,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
 
                 {/* Protected Routes Wrapper */}
                 <Route

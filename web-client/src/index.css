@@ -10,49 +10,110 @@
     cursor: default;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display;
   }
 }
 
 @layer components {
+
+  /* Glassmorphism System */
   .glass-card {
-    @apply bg-navy/60 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden;
+    @apply backdrop-blur-[20px] bg-navy/60 border border-white/10 rounded-2xl overflow-hidden shadow-2xl;
     background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(10, 10, 15, 0.6) 100%);
   }
 
+  /* Glowing Borders & Shadows */
   .glow-cyan {
-    @apply border-primary shadow-cyan-glow;
+    @apply border-primary/40 shadow-cyan-glow;
   }
 
   .glow-pink {
-    @apply border-accent shadow-pink-glow;
+    @apply border-accent/40 shadow-pink-glow;
   }
 
+  /* High-Impact Inputs (Floating Labes are handled in TSX via state) */
+  .input-signal {
+    @apply w-full bg-transparent border-b border-white/10 py-2 outline-none transition-all duration-300 focus:border-primary text-white;
+  }
+
+  .input-signal-focus-line {
+    @apply absolute bottom-0 left-0 h-[2px] bg-primary transition-all duration-500 shadow-cyan-glow;
+  }
+
+  /* CTAs & Buttons */
   .btn-primary {
-    @apply px-6 py-3 bg-primary text-background font-bold rounded-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-cyan-glow;
+    @apply relative px-6 py-3 bg-primary text-background font-black uppercase tracking-widest rounded-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-cyan-glow overflow-hidden;
   }
 
-  .input-field {
-    @apply w-full bg-navy/40 border border-white/5 rounded-lg px-4 py-3 outline-none transition-all duration-300 focus:border-primary focus:shadow-cyan-glow;
+  .btn-primary-acrylic {
+    @apply absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity;
+  }
+
+  .btn-outline-social {
+    @apply w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-muted transition-all duration-300 hover:border-primary hover:text-primary hover:bg-primary/5 hover:shadow-cyan-glow;
+  }
+
+  /* Layout Utilities */
+  .sidebar-link {
+    @apply flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 group;
+  }
+
+  .sidebar-link-active {
+    @apply bg-primary/10 text-primary glow-cyan border border-primary/20;
   }
 }
 
-/* Custom animations */
+/* Custom Animations - "The Wow Factor" */
 @keyframes pulse-slow {
-  0%, 100% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
+
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin-linear {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-pulse-slow {
   animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+.animate-spin-slow {
+  animation: spin-linear 8s linear infinite;
+}
+
 /* Hide scrollbars but allow scrolling */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Background Wave Animation */
+.bg-wave-animated {
+  @apply animate-pulse;
+  transition: all 3s ease-in-out;
 }

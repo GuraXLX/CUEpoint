@@ -32,11 +32,12 @@ export const Logo = ({ size = 48, className = "" }) => {
                     />
                 </div>
 
-                {/* Cue Mark Dot */}
+                {/* Cue Mark Dot (The "Point") - Animates on load */}
+                <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-accent rounded-full shadow-pink-glow animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite] opacity-75" />
                 <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-accent rounded-full shadow-pink-glow" />
             </div>
-            <span className="font-display text-2xl font-bold tracking-tight text-white">
-                CuePoint<span className="text-primary italic">AI</span>
+            <span className="font-display text-2xl font-bold tracking-tight text-white uppercase italic">
+                CuePoint<span className="text-primary not-italic">AI</span>
             </span>
         </div>
     );
