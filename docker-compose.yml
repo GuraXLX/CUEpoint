@@ -1,0 +1,146 @@
+version: '3.8'
+
+services:
+  # -------------------------------------------------------------------------
+  # Database: PostgreSQL
+  # -------------------------------------------------------------------------
+  postgres:
+    image: postgres:15-alpine
+    container_name: cuepoint-postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cuepoint
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - cuepoint-network
+
+  # -------------------------------------------------------------------------
+  # Cache & Message Broker: Redis
+  # -------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: cuepoint-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - cuepoint-network
+
+  # -------------------------------------------------------------------------
+  # Object Storage: MinIO
+  # -------------------------------------------------------------------------
+  minio:
+    image: minio/minio:latest
+    container_name: cuepoint-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - cuepoint-network
+
+  # Helper to create default buckets
+  minio-init:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      until (mc alias set minio http://minio:9000 minioadmin minioadmin); do echo '...waiting...'; sleep 1; done;
+      mc mb minio/tracks;
+      mc mb minio/covers;
+      mc mb minio/profiles;
+      exit 0;
+      "
+    networks:
+      - cuepoint-network
+
+  # -------------------------------------------------------------------------
+  # API Service
+  # -------------------------------------------------------------------------
+  api-service:
+    build:
+      context: ./api-service
+      dockerfile: Dockerfile
+    container_name: cuepoint-api
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./api-service:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres:5432/cuepoint
+      - REDIS_URL=redis://redis:6379/0
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - MINIO_SECURE=false
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    networks:
+      - cuepoint-network
+
+  # -------------------------------------------------------------------------
+  # AI Worker
+  # -------------------------------------------------------------------------
+  ai-worker:
+    build:
+      context: ./ai-worker
+      dockerfile: Dockerfile
+    container_name: cuepoint-ai-worker
+    command: celery -A worker.celery_app worker --loglevel=info
+    volumes:
+      - ./ai-worker:/app
+      # Shared code/models simulation if needed
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres:5432/cuepoint
+      - REDIS_URL=redis://redis:6379/0
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - MINIO_SECURE=false
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - cuepoint-network
+
+  # -------------------------------------------------------------------------
+  # Frontend (Dev Server)
+  # -------------------------------------------------------------------------
+  web-client:
+    build:
+      context: ./web-client
+      dockerfile: Dockerfile
+    container_name: cuepoint-web
+    command: npm run dev -- --host
+    volumes:
+      - ./web-client:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    networks:
+      - cuepoint-network
+
+networks:
+  cuepoint-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

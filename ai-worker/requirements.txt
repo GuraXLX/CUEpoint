@@ -1,0 +1,9 @@
+celery
+redis
+sqlalchemy
+psycopg2-binary
+minio
+requests
+librosa
+numpy
+soundfile
