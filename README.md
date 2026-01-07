@@ -44,13 +44,13 @@ Built on a robust, cloud-native stack designed for scale.
 
 ```mermaid
 graph TD
-    Client[Web Client<br/>(React + Vite)] -->|REST/HTTP| API[API Service<br/>(FastAPI)]
-    API -->|Auth| DB[(PostgreSQL)]
+    Client["Web Client<br/>(React + Vite)"] -->|REST/HTTP| API["API Service<br/>(FastAPI)"]
+    API -->|Auth| DB[("PostgreSQL")]
     API -->|async tasks| Queue[Redis]
-    Queue --> Worker[AI Worker<br/>(Celery)]
-    Worker -->|Load Models| LLM[LLM Server<br/>(vLLM)]
+    Queue --> Worker["AI Worker<br/>(Celery)"]
+    Worker -->|Load Models| LLM["LLM Server<br/>(vLLM)"]
     Worker -->|Audio Analysis| Lib[Librosa/Essentia]
-    Worker -->|Store Assets| Storage[MinIO / S3]
+    Worker -->|Store Assets| Storage["MinIO / S3"]
 ```
 
 ## 🛠️ Tech Stack
