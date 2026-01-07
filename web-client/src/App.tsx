@@ -2,12 +2,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
-
-// Placeholder components
-const SetlistArchitect = () => <div className="text-white p-6">Setlist Architect Module</div>
-const TrackDoctor = () => <div className="text-white p-6">Track Doctor Module</div>
-const Discovery = () => <div className="text-white p-6">Discovery Engine Module</div>
-const Collab = () => <div className="text-white p-6">Collab Hub Module</div>
+import SetlistArchitect from './pages/SetlistArchitect'
+import TrackDoctor from './pages/TrackDoctor'
+import DiscoveryEngine from './pages/DiscoveryEngine'
+import CollabHub from './pages/CollabHub'
 
 function App() {
     return (
@@ -24,8 +22,8 @@ function App() {
                                 <Route path="/dashboard" element={<Dashboard />} />
                                 <Route path="/setlist-architect" element={<SetlistArchitect />} />
                                 <Route path="/track-doctor" element={<TrackDoctor />} />
-                                <Route path="/discovery" element={<Discovery />} />
-                                <Route path="/collab" element={<Collab />} />
+                                <Route path="/discovery" element={<DiscoveryEngine />} />
+                                <Route path="/collab" element={<CollabHub />} />
                                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                             </Routes>
                         </Layout>

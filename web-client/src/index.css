@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&family=JetBrains+Mono&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,6 +6,53 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased font-sans;
+    @apply bg-background text-foreground antialiased font-sans transition-colors duration-300;
+    cursor: default;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-navy/60 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden;
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(10, 10, 15, 0.6) 100%);
+  }
+
+  .glow-cyan {
+    @apply border-primary shadow-cyan-glow;
+  }
+
+  .glow-pink {
+    @apply border-accent shadow-pink-glow;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-primary text-background font-bold rounded-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-cyan-glow;
+  }
+
+  .input-field {
+    @apply w-full bg-navy/40 border border-white/5 rounded-lg px-4 py-3 outline-none transition-all duration-300 focus:border-primary focus:shadow-cyan-glow;
+  }
+}
+
+/* Custom animations */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hide scrollbars but allow scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -67,13 +67,82 @@ def upload_track_for_analysis(
     db.commit()
     db.refresh(db_track)
     
+    # Create empty analysis report
+    db_report = models.TrackAnalysisReport(track_id=db_track.id, status="pending")
+    db.add(db_report)
+    db.commit()
+    
     # Dispatch Celery Task
     task = celery_app.send_task("analyze_track", args=[db_track.id, file.filename])
     
     return db_track
 
+@app.get("/tracks/me", response_model=List[schemas.Track])
+def get_my_tracks(db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    return db.query(models.Track).filter(models.Track.owner_id == current_user.id).all()
+
+# Discovery Engine: Public Tracks
+@app.get("/marketplace", response_model=List[schemas.Track])
+def get_marketplace(db: Session = Depends(database.get_db)):
+    return db.query(models.Track).filter(models.Track.is_public == True).all()
+
+@app.post("/tracks/{track_id}/publish")
+def publish_track(track_id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    db_track = db.query(models.Track).filter(models.Track.id == track_id, models.Track.owner_id == current_user.id).first()
+    if not db_track:
+        raise HTTPException(status_code=404, detail="Track not found")
+    db_track.is_public = True
+    db.commit()
+    return {"status": "published"}
+
 # Module 1: Setlist Architect
 @app.post("/setlists/generate")
-def generate_setlist(goal: str, track_ids: List[int], current_user: models.User = Depends(auth.get_current_user)):
-    task = celery_app.send_task("generate_setlist", args=[goal, track_ids])
-    return {"task_id": task.id, "status": "processing"}
+def generate_setlist(setlist_data: schemas.SetlistCreate, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    # Create DB entry for Setlist
+    db_setlist = models.Setlist(
+        title=setlist_data.title, 
+        description=setlist_data.description, 
+        owner_id=current_user.id,
+        tracks_json="[]" # Will be updated by worker
+    )
+    db.add(db_setlist)
+    db.commit()
+    db.refresh(db_setlist)
+    
+    task = celery_app.send_task("generate_setlist", args=[db_setlist.id, setlist_data.goal, setlist_data.track_ids])
+    return {"task_id": task.id, "setlist_id": db_setlist.id, "status": "processing"}
+
+@app.get("/setlists/me", response_model=List[schemas.Setlist])
+def get_my_setlists(db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    return db.query(models.Setlist).filter(models.Setlist.owner_id == current_user.id).all()
+
+# Module 4: Collab Hub (Projects, Forum, Messages)
+@app.get("/projects", response_model=List[schemas.Project])
+def get_projects(db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    return db.query(models.Project).filter(models.Project.owner_id == current_user.id).all()
+
+@app.get("/forum/posts", response_model=List[schemas.ForumPost])
+def get_forum_posts(db: Session = Depends(database.get_db)):
+    return db.query(models.ForumPost).all()
+
+@app.post("/forum/posts", response_model=schemas.ForumPost)
+def create_forum_post(post: schemas.ForumPostBase, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    db_post = models.ForumPost(title=post.title, content=post.content, author_id=current_user.id)
+    db.add(db_post)
+    db.commit()
+    db.refresh(db_post)
+    return db_post
+
+@app.get("/messages", response_model=List[schemas.Message])
+def get_messages(db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    return db.query(models.Message).filter(
+        (models.Message.sender_id == current_user.id) | (models.Message.receiver_id == current_user.id)
+    ).all()
+
+@app.post("/messages", response_model=schemas.Message)
+def send_message(msg: schemas.MessageBase, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    db_msg = models.Message(content=msg.content, sender_id=current_user.id, receiver_id=msg.receiver_id)
+    db.add(db_msg)
+    db.commit()
+    db.refresh(db_msg)
+    return db_msg

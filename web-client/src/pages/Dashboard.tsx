@@ -1,60 +1,139 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-import { MusicalNoteIcon, SparklesIcon, GlobeAltIcon, UserGroupIcon } from '@heroicons/react/24/outline'
+import { CountingNumber } from '../components/CountingNumber'
+import {
+    SparklesIcon,
+    BeakerIcon,
+    GlobeAltIcon,
+    UserGroupIcon,
+    ChartBarIcon,
+    PlayIcon,
+    UserIcon
+} from '@heroicons/react/24/outline'
 
 export default function Dashboard() {
     return (
-        <div>
-            <h1 className="text-3xl font-bold text-white mb-8">Welcome back, Producer</h1>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                {/* Setlist Architect Card */}
-                <div className="bg-card p-6 rounded-xl shadow-lg border border-white/5 hover:border-primary/50 transition-all group">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-white group-hover:text-primary transition-colors">Setlist Architect</h2>
-                        <SparklesIcon className="h-6 w-6 text-primary" />
-                    </div>
-                    <p className="text-gray-400 mb-6 h-12">Create the perfect journey. AI-powered track selection and harmonic mixing suggestions.</p>
-                    <Link to="/setlist-architect" className="inline-flex items-center justify-center w-full bg-primary/10 hover:bg-primary text-primary hover:text-white border border-primary/20 hover:border-transparent px-4 py-2 rounded-lg transition-all font-medium">
-                        Start Planning
-                    </Link>
+        <div className="space-y-10 animate-in fade-in duration-500">
+            {/* Header / Welcome */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <h1 className="text-4xl font-bold tracking-tight text-white mb-2">
+                        System Status: <span className="text-primary">Operational</span>
+                    </h1>
+                    <p className="text-muted">Welcome back, Commander. Your creative ecosystem is synced.</p>
                 </div>
-
-                {/* Track Doctor Card */}
-                <div className="bg-card p-6 rounded-xl shadow-lg border border-white/5 hover:border-secondary/50 transition-all group">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-white group-hover:text-secondary transition-colors">Track Doctor</h2>
-                        <MusicalNoteIcon className="h-6 w-6 text-secondary" />
+                <div className="flex gap-4">
+                    <div className="glass-card px-6 py-3 flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-sm font-medium">Stage Ready</span>
                     </div>
-                    <p className="text-gray-400 mb-6 h-12">Get detailed feedback on your mix. Analyze clarity, low-end, and dynamic range.</p>
-                    <Link to="/track-doctor" className="inline-flex items-center justify-center w-full bg-secondary/10 hover:bg-secondary text-secondary hover:text-white border border-secondary/20 hover:border-transparent px-4 py-2 rounded-lg transition-all font-medium">
-                        Analyze Track
-                    </Link>
                 </div>
+            </div>
 
-                {/* Discovery Engine Card */}
-                <div className="bg-card p-6 rounded-xl shadow-lg border border-white/5 hover:border-accent/50 transition-all group">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-white group-hover:text-accent transition-colors">Discovery Engine</h2>
-                        <GlobeAltIcon className="h-6 w-6 text-accent" />
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                    { label: 'Cloud Storage', value: 85, suffix: '%', icon: ChartBarIcon, color: 'text-primary' },
+                    { label: 'Tracks Analyzed', value: 142, suffix: '', icon: BeakerIcon, color: 'text-accent' },
+                    { label: 'Setlist Flow', value: 98, suffix: '%', icon: PlayIcon, color: 'text-green-500' },
+                    { label: 'Collaborators', value: 12, suffix: '', icon: UserIcon, color: 'text-blue-500' },
+                ].map((stat, i) => (
+                    <div key={i} className="glass-card p-6 flex items-center justify-between group hover:glow-cyan transition-all duration-300">
+                        <div>
+                            <p className="text-xs font-medium text-muted uppercase tracking-wider mb-1">{stat.label}</p>
+                            <div className="text-3xl font-bold">
+                                <CountingNumber value={stat.value} suffix={stat.suffix} />
+                            </div>
+                        </div>
+                        <stat.icon className={`h-8 w-8 ${stat.color} opacity-80 group-hover:opacity-100 transition-opacity`} />
                     </div>
-                    <p className="text-gray-400 mb-6 h-12">Find hidden gems. AI-curated tracks from unsigned artists tailored to your style.</p>
-                    <Link to="/discovery" className="inline-flex items-center justify-center w-full bg-accent/10 hover:bg-accent text-accent hover:text-white border border-accent/20 hover:border-transparent px-4 py-2 rounded-lg transition-all font-medium">
-                        Explore Music
-                    </Link>
-                </div>
+                ))}
+            </div>
 
-                {/* Collab Hub Card */}
-                <div className="bg-card p-6 rounded-xl shadow-lg border border-white/5 hover:border-green-500/50 transition-all group">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-white group-hover:text-green-500 transition-colors">Collab Hub</h2>
-                        <UserGroupIcon className="h-6 w-6 text-green-500" />
+            {/* Module Access Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                {/* Setlist Architect */}
+                <Link to="/setlist-architect" className="glass-card p-8 group relative overflow-hidden transition-all duration-500 hover:glow-cyan border-white/5">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                        <SparklesIcon className="w-32 h-32" />
                     </div>
-                    <p className="text-gray-400 mb-6 h-12">Connect with vocalists and producers. Manage projects and share stems securely.</p>
-                    <Link to="/collab" className="inline-flex items-center justify-center w-full bg-green-500/10 hover:bg-green-500 text-green-500 hover:text-white border border-green-500/20 hover:border-transparent px-4 py-2 rounded-lg transition-all font-medium">
-                        Find Collaborators
-                    </Link>
-                </div>
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 bg-primary/10 rounded-xl">
+                                <SparklesIcon className="w-8 h-8 text-primary shadow-cyan-glow" />
+                            </div>
+                            <h2 className="text-2xl font-bold">Setlist Architect</h2>
+                        </div>
+                        <p className="text-muted mb-8 max-w-sm">
+                            Model harmonic energy flows and construct perfect 90-minute sets using Camelot notation logic.
+                        </p>
+                        <div className="flex items-center gap-2 text-primary font-bold group-hover:translate-x-2 transition-transform">
+                            Enter Module <span className="text-lg">→</span>
+                        </div>
+                    </div>
+                </Link>
+
+                {/* Track Doctor */}
+                <Link to="/track-doctor" className="glass-card p-8 group relative overflow-hidden transition-all duration-500 hover:glow-pink border-white/5">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                        <BeakerIcon className="w-32 h-32" />
+                    </div>
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 bg-accent/10 rounded-xl">
+                                <BeakerIcon className="w-8 h-8 text-accent shadow-pink-glow" />
+                            </div>
+                            <h2 className="text-2xl font-bold">Track Doctor</h2>
+                        </div>
+                        <p className="text-muted mb-8 max-w-sm">
+                            Submit your mixes for AI-driven spectral analysis and objective mix-quality report cards.
+                        </p>
+                        <div className="flex items-center gap-2 text-accent font-bold group-hover:translate-x-2 transition-transform">
+                            Enter Module <span className="text-lg">→</span>
+                        </div>
+                    </div>
+                </Link>
+
+                {/* Discovery Engine */}
+                <Link to="/discovery" className="glass-card p-8 group relative overflow-hidden transition-all duration-500 hover:glow-cyan border-white/5">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                        <GlobeAltIcon className="w-32 h-32" />
+                    </div>
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 bg-blue-500/10 rounded-xl">
+                                <GlobeAltIcon className="w-8 h-8 text-blue-500 shadow-lg" />
+                            </div>
+                            <h2 className="text-2xl font-bold">Discovery Engine</h2>
+                        </div>
+                        <p className="text-muted mb-8 max-w-sm">
+                            Unearth AI-vetted gems from our curated marketplace of high-fidelity underground signals.
+                        </p>
+                        <div className="flex items-center gap-2 text-blue-500 font-bold group-hover:translate-x-2 transition-transform">
+                            Enter Module <span className="text-lg">→</span>
+                        </div>
+                    </div>
+                </Link>
+
+                {/* Collab Hub */}
+                <Link to="/collab" className="glass-card p-8 group relative overflow-hidden transition-all duration-500 hover:shadow-green-500/20 shadow-xl border-white/5 hover:border-green-500">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                        <UserGroupIcon className="w-32 h-32" />
+                    </div>
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 bg-green-500/10 rounded-xl">
+                                <UserGroupIcon className="w-8 h-8 text-green-500 shadow-lg" />
+                            </div>
+                            <h2 className="text-2xl font-bold">Collab Hub</h2>
+                        </div>
+                        <p className="text-muted mb-8 max-w-sm">
+                            Command your projects, secure file transfers, and engage with the global community.
+                        </p>
+                        <div className="flex items-center gap-2 text-green-500 font-bold group-hover:translate-x-2 transition-transform">
+                            Enter Module <span className="text-lg">→</span>
+                        </div>
+                    </div>
+                </Link>
             </div>
         </div>
     )
