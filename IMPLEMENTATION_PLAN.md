@@ -8,11 +8,12 @@ This plan outlines the systematic approach to transforming CuePoint AI into the 
 - [x] **Backend Infrastructure**: Expanded models, API routes, and AI worker simulation.
 - [x] **System Persistence**: Architecture tracked in `system_memory.md`.
 
-## Phase 2: System Ignition & Connectivity (NEXT 🏎️)
-### 1. Authentic Activation (Auth Integration)
-- [ ] **JWT Integration**: Connect Login/Signup components to FastAPI `/token` and `/users/` endpoints.
-- [ ] **Session Persistence**: Store JWT in local storage and implement an `AuthContext` to protect routes.
-- [ ] **Stateful Activation**: Show the "Initializing Session" animation during real API wait times.
+## Phase 2: System Ignition & Connectivity (IN PROGRESS 🏎️)
+### 1. Authentic Activation (Supabase Auth Integration)
+- [x] **Supabase Client**: Initialized `supabase-js` client with provided credentials.
+- [x] **Auth Context**: Created `AuthContext` for global session management.
+- [x] **Stateful Activation**: Updated Login/Signup to use real Supabase auth while maintaining the "Initialization" animation.
+- [ ] **Auth Guard**: Implement protected routes that redirect to `/login` if no session exists.
 
 ### 2. Live Signal Processing (Data & Storage)
 - [ ] **Track Doctor Uploads**: Integrate MinIO client in the frontend to upload real WAV/MP3 files.

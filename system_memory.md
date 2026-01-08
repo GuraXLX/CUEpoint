@@ -5,7 +5,7 @@
 
 ### 🏗️ Technical Architecture
 - **Frontend**: React (Vite) + Tailwind CSS + HeroIcons.
-- **Backend**: FastAPI (Python) + SQLAlchemy ORM (Custom) | **Auth**: Supabase Integration (Provided Jan 7).
+- **Backend**: FastAPI (Python) + SQLAlchemy ORM (Custom) | **Auth**: Supabase Integration.
 - **Task Queue**: Celery + Redis (for async AI simulations).
 - **Database**: PostgreSQL (Docker) & Supabase for user auth.
 - **Storage**: MinIO (S3-compatible) for audio files and assets.
@@ -16,30 +16,29 @@
 ## 🎨 Design System & UI Details
 ### 1. Brand Philosophy
 - **Aesthetic**: Futuristic sci-fi, glassmorphism, and high-end studio hardware feel.
-- **Tone**: Professional, precise, and tech-forward.
 - **"The Activation Sequence"**: Login/Signup is a "system initialization" flow.
 
 ### 2. Color Palette (Dark Mode Primary)
 - **Void Black (#0A0A0F)**: Primary background.
 - **Electric Cyan (#00F2FE)**: Brand primary.
 - **Signal Pink (#FF3366)**: Accent color.
-- **Deep Navy (#1A1A2E)**: Panels/Cards.
 
 ---
 
-## ✅ Current Progress (Update: Jan 7, 20:25)
-- [x] **Infra**: Docker Compose service-ready. Fixed `web-client` Build conflicts.
-- [x] **Auth Prototype**: "Activation Sequence" screens (Login/Signup) fully functional with generative backgrounds.
-- [x] **Modules**: Setlist Architect, Track Doctor, Discovery, and Collab Hub implemented as high-fidelity prototypes.
-- [x] **Credentials**: Supabase credentials stored in `web-client/.env` for real auth integration.
+## ✅ Current Progress (Update: Jan 8, 06:20)
+- [x] **Auth Integration**: Supabase client initialized and integrated into `Login.tsx` and `Signup.tsx`.
+- [x] **Global State**: `AuthContext` and `AuthProvider` implemented to manage real-time sessions.
+- [x] **Infrastructure Fixes**: Created missing `index.html`, `main.tsx`, and `Dockerfile` for `web-client`.
+- [!] **Build Blocker**: `npm install` inside the `web-client` container is currently failing due to peer dependency conflicts (React 18 vs library requirements).
 
 ## 🏎️ Roadmap: Phase 2 (Ignition)
-1. **Supabase Integration**: Replace mock login with real Supabase Auth using the provided service role and project ref.
-2. **Signal Live-Processing**: Integrate actual MinIO uploads for Track Doctor.
-3. **Interactive Visuals**: Make radial Rings clickable to show spectrum charts.
+1. **Fix Dependency Conflicts**: Update `Dockerfile` or `package.json` to handle dependency resolution (e.g., `--legacy-peer-deps`).
+2. **Verify Server Ignition**: Successfully start the `web-client` on `:5173`.
+3. **Auth Guard Verification**: Test real login/signup flows against Supabase.
+4. **MinIO Connection**: Transition Track Doctor to real file uploads.
 
 ## 📍 Coding Notes & Constraints
-- **Universal CSS**: All components must use tokens defined in `index.css`.
-- **Model Continuity**: UI Specs and System Overview are permanently baked into this file for AI resume.
-- **Git Strategy**: Commit/Push every 2 mins during active work.
-- **Current SHA**: `7478d81` -> `3ef1469` (Auth credential snapshot).
+- **Model Continuity**: UI Specs and System Overview are permanently baked into this file.
+- **Dependency Handling**: `web-client` requires strict version alignment for React 18 and HeroIcons v2.
+- **Git Strategy**: Commit/Push every snapshot to ensure state recovery.
+- **Current SHA**: `4a3a439` -> `7478d81` -> `Snapshot 06:20`.

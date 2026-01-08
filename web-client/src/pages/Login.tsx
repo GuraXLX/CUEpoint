@@ -3,7 +3,9 @@ import { Logo } from '../components/Logo';
 import {
     EyeIcon,
     EyeSlashIcon,
+    ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline';
+import { supabase } from '../lib/supabase';
 
 // Social Icon components (outlined)
 const GoogleIcon = () => (
@@ -31,18 +33,32 @@ export default function Login() {
     const [focus, setFocus] = useState<string | null>(null);
     const [isActivating, setIsActivating] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         setIsLoaded(true);
     }, []);
 
-    const handleActivate = (e: React.FormEvent) => {
+    const handleActivate = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsActivating(true);
-        // Simulate "Activation Sequence"
+        setError(null);
+
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+
+        if (error) {
+            setError(error.message);
+            setIsActivating(false);
+            return;
+        }
+
+        // Delay for the "Activation Sequence" feeling
         setTimeout(() => {
             window.location.href = '/dashboard';
-        }, 2500);
+        }, 1500);
     };
 
     return (
@@ -115,6 +131,14 @@ export default function Login() {
                         </div>
                     )}
 
+                    {/* Error State */}
+                    {error && (
+                        <div className="mb-6 p-4 bg-accent/10 border border-accent/20 rounded-xl flex items-center gap-3 animate-in slide-in-from-top-2">
+                            <ExclamationTriangleIcon className="w-5 h-5 text-accent" />
+                            <p className="text-xs font-bold text-accent uppercase tracking-wider">{error}</p>
+                        </div>
+                    )}
+
                     <form onSubmit={handleActivate} className="space-y-10">
                         {/* Email Input: Floating Placeholder */}
                         <div className="relative group">
@@ -128,8 +152,8 @@ export default function Login() {
                                 className="w-full bg-transparent border-b border-white/10 py-2 outline-none transition-all duration-300 focus:border-primary text-white"
                             />
                             <label className={`absolute left-0 transition-all duration-300 pointer-events-none uppercase tracking-widest ${focus === 'email' || email
-                                    ? '-top-6 text-[10px] text-primary font-bold'
-                                    : 'top-2 text-sm text-muted'
+                                ? '-top-6 text-[10px] text-primary font-bold'
+                                : 'top-2 text-sm text-muted'
                                 }`}>
                                 Signal Address
                             </label>
@@ -150,8 +174,8 @@ export default function Login() {
                                 className="w-full bg-transparent border-b border-white/10 py-2 pr-10 outline-none transition-all duration-300 focus:border-primary text-white"
                             />
                             <label className={`absolute left-0 transition-all duration-300 pointer-events-none uppercase tracking-widest ${focus === 'password' || password
-                                    ? '-top-6 text-[10px] text-primary font-bold'
-                                    : 'top-2 text-sm text-muted'
+                                ? '-top-6 text-[10px] text-primary font-bold'
+                                : 'top-2 text-sm text-muted'
                                 }`}>
                                 Security Key
                             </label>

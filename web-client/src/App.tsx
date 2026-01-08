@@ -7,32 +7,35 @@ import SetlistArchitect from './pages/SetlistArchitect'
 import TrackDoctor from './pages/TrackDoctor'
 import DiscoveryEngine from './pages/DiscoveryEngine'
 import CollabHub from './pages/CollabHub'
+import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
 
-                {/* Protected Routes Wrapper */}
-                <Route
-                    path="/*"
-                    element={
-                        <Layout>
-                            <Routes>
-                                <Route path="/dashboard" element={<Dashboard />} />
-                                <Route path="/setlist-architect" element={<SetlistArchitect />} />
-                                <Route path="/track-doctor" element={<TrackDoctor />} />
-                                <Route path="/discovery" element={<DiscoveryEngine />} />
-                                <Route path="/collab" element={<CollabHub />} />
-                                <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                            </Routes>
-                        </Layout>
-                    }
-                />
-            </Routes>
-        </Router>
+                    {/* Protected Routes Wrapper */}
+                    <Route
+                        path="/*"
+                        element={
+                            <Layout>
+                                <Routes>
+                                    <Route path="/dashboard" element={<Dashboard />} />
+                                    <Route path="/setlist-architect" element={<SetlistArchitect />} />
+                                    <Route path="/track-doctor" element={<TrackDoctor />} />
+                                    <Route path="/discovery" element={<DiscoveryEngine />} />
+                                    <Route path="/collab" element={<CollabHub />} />
+                                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                                </Routes>
+                            </Layout>
+                        }
+                    />
+                </Routes>
+            </Router>
+        </AuthProvider>
     )
 }
 
