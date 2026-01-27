@@ -43,8 +43,8 @@ export default function CollabHub() {
                             key={item.id}
                             onClick={() => setActiveTab(item.id)}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${activeTab === item.id
-                                    ? 'bg-primary/10 text-primary border border-primary/20'
-                                    : 'text-muted hover:bg-white/5 hover:text-white'
+                                ? 'bg-primary/10 text-primary border border-primary/20'
+                                : 'text-muted hover:bg-white/5 hover:text-white'
                                 }`}
                         >
                             <item.icon className="w-5 h-5" />
@@ -123,7 +123,7 @@ export default function CollabHub() {
                     {activeTab === 'projects' && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {['Sub-Frequency Pulse', 'Techno Genesis', 'Neon Nightset'].map((proj, i) => (
-                                <div key={i} className="glass-card p-8 border-white/5 hover:glow-cyan transition-all group">
+                                <div key={i} className="glass-card p-8 border-white/5 hover:glow-neon transition-all group">
                                     <div className="flex justify-between items-center mb-4">
                                         <FolderIcon className="w-8 h-8 text-primary opacity-60 group-hover:opacity-100" />
                                         <div className="text-[10px] font-bold px-2 py-0.5 bg-green-500/10 text-green-500 rounded border border-green-500/20">Active</div>
@@ -146,7 +146,7 @@ export default function CollabHub() {
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             placeholder={`Signal your intent to #${activeTab === 'forum' ? 'production-tips' : 'Neon_Void'}...`}
-                            className="w-full bg-navy/40 border border-white/5 rounded-2xl py-4 pl-6 pr-16 outline-none focus:glow-cyan focus:border-primary/40 transition-all"
+                            className="w-full bg-navy/40 border border-white/5 rounded-2xl py-4 pl-6 pr-16 outline-none focus:glow-neon focus:border-primary/40 transition-all"
                         />
                         <button className="absolute right-4 top-1/2 -translate-y-1/2 bg-primary p-2 rounded-xl text-background hover:scale-110 active:scale-95 transition-all shadow-cyan-glow">
                             <PaperAirplaneIcon className="w-5 h-5 -rotate-45" />

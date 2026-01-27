@@ -55,13 +55,7 @@ services:
     depends_on:
       - minio
     entrypoint: >
-      /bin/sh -c "
-      until (mc alias set minio http://minio:9000 minioadmin minioadmin); do echo '...waiting...'; sleep 1; done;
-      mc mb minio/tracks;
-      mc mb minio/covers;
-      mc mb minio/profiles;
-      exit 0;
-      "
+      /bin/sh -c " until (mc alias set minio http://minio:9000 minioadmin minioadmin); do echo '...waiting...'; sleep 1; done; mc mb minio/tracks; mc mb minio/covers; mc mb minio/profiles; exit 0; "
     networks:
       - cuepoint-network
 
@@ -85,6 +79,7 @@ services:
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
       - MINIO_SECURE=false
+      - SUPABASE_JWT_SECRET=q6kcAxI5GPQDFyQ3kbHKE5h75oEVGfEKu0iDIAwMZknmIrpIDtucozKX0aiZ65Yi9HwOm7FIJMMV3dQhpW2o5Q==
     depends_on:
       - postgres
       - redis

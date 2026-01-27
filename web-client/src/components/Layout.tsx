@@ -37,8 +37,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 key={item.name}
                                 to={item.href}
                                 className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 group ${isActive
-                                        ? 'bg-primary/10 text-primary glow-cyan border border-primary/20'
-                                        : 'text-muted hover:bg-white/5 hover:text-white'
+                                    ? 'bg-primary/10 text-primary glow-neon border border-primary/20'
+                                    : 'text-muted hover:bg-white/5 hover:text-white'
                                     }`}
                             >
                                 <item.icon className={`h-6 w-6 transition-colors ${isActive ? 'text-primary' : 'group-hover:text-primary'

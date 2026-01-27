@@ -14,25 +14,33 @@ export default function SetlistArchitect() {
 
     return (
         <div className="space-y-12 animate-in slide-in-from-bottom-6 duration-700">
-            {/* Configuration Header */}
-            <div className="glass-card p-8 flex flex-col lg:flex-row gap-8 items-end">
+            {/* Header / Actions */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div>
+                    <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-2">SETLIST <span className="text-neutral-600">ARCHITECT</span></h1>
+                    <p className="text-sm font-mono text-neutral-400 uppercase tracking-widest">Workspace: Main A // Session 442</p>
+                </div>
+
+                <div className="flex gap-4">
+                    <div className="glass-card px-4 py-2 border-white/5 flex items-center gap-3">
+                        <span className="text-[10px] text-neutral-400 uppercase tracking-widest">Total Duration</span>
+                        <span className="font-mono font-bold text-primary">01:30:00</span>
+                    </div>
+                    <button className="px-6 py-2 bg-primary text-black font-mono text-xs uppercase tracking-wider font-bold hover:brightness-110 flex items-center gap-2 transition-all shadow-primary-btn">
+                        <SparklesIcon className="w-4 h-4" /> Auto-Flow
+                    </button>
+                </div>
+            </div>
+
+            {/* Configuration Header - Reduced */}
+            <div className="glass-card p-6 flex flex-col lg:flex-row gap-6 items-end border-white/5 bg-white/5">
                 <div className="flex-1 space-y-2">
-                    <label className="text-xs font-bold text-primary uppercase tracking-widest">Setlist Objective</label>
+                    <label className="text-[10px] font-bold text-primary uppercase tracking-widest">Setlist Objective</label>
                     <input
                         value={goal}
                         onChange={(e) => setGoal(e.target.value)}
-                        className="w-full bg-transparent text-2xl font-bold border-b-2 border-white/10 focus:border-primary outline-none transition-all py-2"
+                        className="w-full bg-transparent text-xl font-bold border-b border-white/10 focus:border-primary outline-none transition-all py-1 font-display"
                     />
-                </div>
-                <div className="flex gap-4">
-                    <div className="glass-card px-6 py-3 border-white/5">
-                        <span className="text-xs text-muted block mb-1">Duration</span>
-                        <span className="font-bold">90 Min</span>
-                    </div>
-                    <button className="btn-primary flex items-center gap-2">
-                        <SparklesIcon className="w-5 h-5" />
-                        Recalculate Flow
-                    </button>
                 </div>
             </div>
 
@@ -74,7 +82,7 @@ export default function SetlistArchitect() {
                     {/* Horizontal Timeline */}
                     <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar relative z-10">
                         {MOCK_TRACKS.map((track, i) => (
-                            <div key={i} className="flex-shrink-0 w-64 glass-card p-4 hover:glow-cyan transition-all cursor-pointer group/track">
+                            <div key={i} className="flex-shrink-0 w-64 glass-card p-4 hover:glow-neon transition-all cursor-pointer group/track">
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="bg-primary/20 text-primary px-2 py-0.5 rounded text-[10px] font-bold">
                                         {track.key}
@@ -149,7 +157,7 @@ export default function SetlistArchitect() {
                         </div>
                         <p className="text-xs text-muted mt-2">Optimal high-energy retention achieved.</p>
                     </div>
-                    <button className="w-full btn-primary glow-cyan">
+                    <button className="w-full btn-primary glow-neon">
                         Export Setlist to USB
                     </button>
                 </div>

@@ -15,20 +15,29 @@ export default function DiscoveryEngine() {
 
     return (
         <div className="space-y-10 animate-in slide-in-from-bottom-6 duration-700">
+
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+                <div>
+                    <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-2">DISCOVERY <span className="text-neutral-600">ENGINE</span></h1>
+                    <p className="text-sm font-mono text-neutral-400 uppercase tracking-widest">Workspace: Main A // Session 442</p>
+                </div>
+            </div>
+
             {/* Search & Filter Bar */}
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex flex-col md:flex-row gap-4 mb-12">
                 <div className="flex-1 relative">
-                    <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
+                    <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                     <input
                         placeholder="Search by artist, genre, or mood..."
-                        className="w-full bg-navy/40 border border-white/5 rounded-2xl py-4 pl-12 pr-4 outline-none focus:glow-cyan focus:border-primary/40 transition-all font-medium"
+                        className="w-full bg-[#111] border border-white/10 rounded-sm py-3 pl-12 pr-4 outline-none focus:border-white/30 transition-all font-mono text-sm uppercase tracking-wide text-white placeholder:text-neutral-600"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
-                <button className="glass-card px-6 flex items-center gap-3 hover:glow-cyan transition-all border-white/5">
-                    <AdjustmentsHorizontalIcon className="w-5 h-5 text-primary" />
-                    <span className="font-bold">Advanced Signal Filters</span>
+                <button className="px-6 py-3 border border-white/10 bg-[#111] hover:bg-[#1A1A1A] text-white font-mono text-xs uppercase tracking-wider transition-colors flex items-center gap-3">
+                    <AdjustmentsHorizontalIcon className="w-4 h-4 text-primary" />
+                    <span>Advanced</span>
                 </button>
             </div>
 
@@ -67,9 +76,9 @@ export default function DiscoveryEngine() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {MOCK_MARKETPLACE.map((track) => (
-                        <div key={track.id} className="glass-card p-6 group hover:glow-cyan transition-all duration-500 border-white/5 relative">
+                        <div key={track.id} className="glass-card p-6 group hover:glow-neon transition-all duration-500 border-white/5 relative">
                             <div className="flex justify-between items-start mb-6">
-                                <div className="p-3 bg-navy rounded-xl border border-white/5 group-hover:glow-cyan transition-all">
+                                <div className="p-3 bg-navy rounded-xl border border-white/5 group-hover:glow-neon transition-all">
                                     <PlayIcon className="w-6 h-6 text-primary" />
                                 </div>
                                 <div className="text-center">

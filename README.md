@@ -17,6 +17,13 @@ CuePoint AI isn't just a tool; it's your co-pilot. Whether you're a bedroom prod
 
 ## ✨ Core Modules
 
+### 🎛️ The Studio Experience (New v2.0)
+**"Glass Cockpit & Cyber-Analogue Design."**
+A fully immersive, high-fidelity interface designed for professional workflows.
+- **Holographic Waveforms**: Real-time visual feedback with scanline aesthetics.
+- **Tactile Controls**: Physical-feel buttons and knobs with dynamic lighting.
+- **Adaptive Layouts**: Unpinnable panels and customizable workspaces.
+
 ### 🎼 Module 1: Setlist Architect
 **"Perfect Flow, Every Time."**
 Our AI analyzes key, BPM, and energy levels to construct harmonically coherent setlists. Describe your goal—*"90-minute high-energy techno sunset"*—and let the Architect suggest the perfect journey.

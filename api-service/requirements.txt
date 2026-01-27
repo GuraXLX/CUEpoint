@@ -11,3 +11,4 @@ celery
 redis
 minio
 requests
+pyjwt[crypto]

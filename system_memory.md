@@ -25,20 +25,30 @@
 
 ---
 
-## ✅ Current Progress (Update: Jan 8, 06:20)
+## ✅ Current Progress (Update: Jan 27, 11:30)
 - [x] **Auth Integration**: Supabase client initialized and integrated into `Login.tsx` and `Signup.tsx`.
 - [x] **Global State**: `AuthContext` and `AuthProvider` implemented to manage real-time sessions.
 - [x] **Infrastructure Fixes**: Created missing `index.html`, `main.tsx`, and `Dockerfile` for `web-client`.
-- [!] **Build Blocker**: `npm install` inside the `web-client` container is currently failing due to peer dependency conflicts (React 18 vs library requirements).
+- [x] **Dependency Conflict Resolved**: Added `--legacy-peer-deps` flag to `web-client/Dockerfile`.
+- [x] **Auth Architecture Simplified**: Removed internal JWT system, using Supabase-only auth.
+- [x] **API Client Created**: `api.ts` with Supabase token interceptor for all backend calls.
+- [x] **Backend Auth Updated**: Created `supabase_auth.py` for JWT verification.
+- [x] **UI Overhaul (Cyber-Analogue)**: Refactored `PlayerBar.tsx` with "Glass Cockpit" design, tactile controls, and holographic waveform.
+- [x] **UX Improvements**: Made `RightPanel.tsx` unpinnable/collapsible via `DashboardLayout`.
+- [x] **Metric Relocation**: Moved system stats (CPU, SSD, Latency) from RightPanel to PlayerBar for better spatial efficiency.
+- [ ] **Docker Stack Verification**: Pending test of `docker-compose up --build`.
 
 ## 🏎️ Roadmap: Phase 2 (Ignition)
-1. **Fix Dependency Conflicts**: Update `Dockerfile` or `package.json` to handle dependency resolution (e.g., `--legacy-peer-deps`).
-2. **Verify Server Ignition**: Successfully start the `web-client` on `:5173`.
-3. **Auth Guard Verification**: Test real login/signup flows against Supabase.
-4. **MinIO Connection**: Transition Track Doctor to real file uploads.
+1. ~~Fix Dependency Conflicts~~: ✅ COMPLETE
+2. ~~Resolve Dual Auth Integration~~: ✅ COMPLETE  
+3. **Verify Server Ignition**: Test Docker stack startup (NEXT)
+4. **Auth Guard Verification**: Implement protected routes
+5. **MinIO Connection**: Transition Track Doctor to real file uploads.
 
 ## 📍 Coding Notes & Constraints
 - **Model Continuity**: UI Specs and System Overview are permanently baked into this file.
-- **Dependency Handling**: `web-client` requires strict version alignment for React 18 and HeroIcons v2.
+- **Dependency Handling**: `web-client` uses `--legacy-peer-deps` for React 18 compatibility.
+- **Auth Strategy**: Simplified to Supabase-only (removed internal JWT system).
+- **Supabase JWT Secret**: Must be set in `docker-compose.yml` before running (get from Supabase dashboard).
 - **Git Strategy**: Commit/Push every snapshot to ensure state recovery.
-- **Current SHA**: `4a3a439` -> `7478d81` -> `Snapshot 06:20`.
+- **Current SHA**: `4a3a439` -> `7478d81` -> `Snapshot 06:20` -> `Phase 2.1 Complete`.

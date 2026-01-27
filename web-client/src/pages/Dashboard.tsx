@@ -1,140 +1,89 @@
-import { Link } from 'react-router-dom'
-import { CountingNumber } from '../components/CountingNumber'
-import {
-    SparklesIcon,
-    BeakerIcon,
-    GlobeAltIcon,
-    UserGroupIcon,
-    ChartBarIcon,
-    PlayIcon,
-    UserIcon
-} from '@heroicons/react/24/outline'
+import React from 'react';
+import { Plus, MoreHorizontal, Play } from 'lucide-react';
 
-export default function Dashboard() {
-    return (
-        <div className="space-y-10 animate-in fade-in duration-500">
-            {/* Header / Welcome */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-4xl font-bold tracking-tight text-white mb-2">
-                        System Status: <span className="text-primary">Operational</span>
-                    </h1>
-                    <p className="text-muted">Welcome back, Commander. Your creative ecosystem is synced.</p>
-                </div>
-                <div className="flex gap-4">
-                    <div className="glass-card px-6 py-3 flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        <span className="text-sm font-medium">Stage Ready</span>
-                    </div>
-                </div>
+const ProjectCard = ({ title, type, date, color = "bg-primary" }: { title: string, type: string, date: string, color?: string }) => (
+    <div className="group relative aspect-video bg-[#111] border border-white/10 rounded-sm overflow-hidden hover:border-white/30 transition-all cursor-pointer">
+        {/* Background / Art */}
+        <div className={`absolute inset-0 opacity-20 ${color} group-hover:opacity-30 transition-opacity`} />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+
+        {/* Content */}
+        <div className="absolute inset-0 p-5 flex flex-col justify-between">
+            <div className="flex justify-between items-start opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="px-2 py-1 bg-black/50 backdrop-blur-md rounded text-[9px] font-mono border border-white/10">{type}</span>
+                <button className="text-white hover:text-primary"><MoreHorizontal size={16} /></button>
             </div>
 
-            {/* Stats Overview */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[
-                    { label: 'Cloud Storage', value: 85, suffix: '%', icon: ChartBarIcon, color: 'text-primary' },
-                    { label: 'Tracks Analyzed', value: 142, suffix: '', icon: BeakerIcon, color: 'text-accent' },
-                    { label: 'Setlist Flow', value: 98, suffix: '%', icon: PlayIcon, color: 'text-green-500' },
-                    { label: 'Collaborators', value: 12, suffix: '', icon: UserIcon, color: 'text-blue-500' },
-                ].map((stat, i) => (
-                    <div key={i} className="glass-card p-6 flex items-center justify-between group hover:glow-cyan transition-all duration-300">
-                        <div>
-                            <p className="text-xs font-medium text-muted uppercase tracking-wider mb-1">{stat.label}</p>
-                            <div className="text-3xl font-bold">
-                                <CountingNumber value={stat.value} suffix={stat.suffix} />
-                            </div>
-                        </div>
-                        <stat.icon className={`h-8 w-8 ${stat.color} opacity-80 group-hover:opacity-100 transition-opacity`} />
-                    </div>
-                ))}
-            </div>
-
-            {/* Module Access Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                {/* Setlist Architect */}
-                <Link to="/setlist-architect" className="glass-card p-8 group relative overflow-hidden transition-all duration-500 hover:glow-cyan border-white/5">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                        <SparklesIcon className="w-32 h-32" />
-                    </div>
-                    <div className="relative z-10">
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 bg-primary/10 rounded-xl">
-                                <SparklesIcon className="w-8 h-8 text-primary shadow-cyan-glow" />
-                            </div>
-                            <h2 className="text-2xl font-bold">Setlist Architect</h2>
-                        </div>
-                        <p className="text-muted mb-8 max-w-sm">
-                            Model harmonic energy flows and construct perfect 90-minute sets using Camelot notation logic.
-                        </p>
-                        <div className="flex items-center gap-2 text-primary font-bold group-hover:translate-x-2 transition-transform">
-                            Enter Module <span className="text-lg">→</span>
-                        </div>
-                    </div>
-                </Link>
-
-                {/* Track Doctor */}
-                <Link to="/track-doctor" className="glass-card p-8 group relative overflow-hidden transition-all duration-500 hover:glow-pink border-white/5">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                        <BeakerIcon className="w-32 h-32" />
-                    </div>
-                    <div className="relative z-10">
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 bg-accent/10 rounded-xl">
-                                <BeakerIcon className="w-8 h-8 text-accent shadow-pink-glow" />
-                            </div>
-                            <h2 className="text-2xl font-bold">Track Doctor</h2>
-                        </div>
-                        <p className="text-muted mb-8 max-w-sm">
-                            Submit your mixes for AI-driven spectral analysis and objective mix-quality report cards.
-                        </p>
-                        <div className="flex items-center gap-2 text-accent font-bold group-hover:translate-x-2 transition-transform">
-                            Enter Module <span className="text-lg">→</span>
-                        </div>
-                    </div>
-                </Link>
-
-                {/* Discovery Engine */}
-                <Link to="/discovery" className="glass-card p-8 group relative overflow-hidden transition-all duration-500 hover:glow-cyan border-white/5">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                        <GlobeAltIcon className="w-32 h-32" />
-                    </div>
-                    <div className="relative z-10">
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 bg-blue-500/10 rounded-xl">
-                                <GlobeAltIcon className="w-8 h-8 text-blue-500 shadow-lg" />
-                            </div>
-                            <h2 className="text-2xl font-bold">Discovery Engine</h2>
-                        </div>
-                        <p className="text-muted mb-8 max-w-sm">
-                            Unearth AI-vetted gems from our curated marketplace of high-fidelity underground signals.
-                        </p>
-                        <div className="flex items-center gap-2 text-blue-500 font-bold group-hover:translate-x-2 transition-transform">
-                            Enter Module <span className="text-lg">→</span>
-                        </div>
-                    </div>
-                </Link>
-
-                {/* Collab Hub */}
-                <Link to="/collab" className="glass-card p-8 group relative overflow-hidden transition-all duration-500 hover:shadow-green-500/20 shadow-xl border-white/5 hover:border-green-500">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                        <UserGroupIcon className="w-32 h-32" />
-                    </div>
-                    <div className="relative z-10">
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 bg-green-500/10 rounded-xl">
-                                <UserGroupIcon className="w-8 h-8 text-green-500 shadow-lg" />
-                            </div>
-                            <h2 className="text-2xl font-bold">Collab Hub</h2>
-                        </div>
-                        <p className="text-muted mb-8 max-w-sm">
-                            Command your projects, secure file transfers, and engage with the global community.
-                        </p>
-                        <div className="flex items-center gap-2 text-green-500 font-bold group-hover:translate-x-2 transition-transform">
-                            Enter Module <span className="text-lg">→</span>
-                        </div>
-                    </div>
-                </Link>
+            <div>
+                <h3 className="text-xl font-display font-bold text-white mb-1 leading-none">{title}</h3>
+                <p className="text-[10px] font-mono text-neutral-400">{date}</p>
             </div>
         </div>
-    )
-}
+
+        {/* Hover Play Action */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100">
+            <button className="h-12 w-12 rounded-full bg-white text-black flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                <Play size={20} fill="currentColor" className="ml-1" />
+            </button>
+        </div>
+    </div>
+);
+
+const Dashboard = () => {
+    return (
+        <>
+            {/* Header / Actions */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div>
+                    <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-2">STUDIO <span className="text-neutral-600">OVERVIEW</span></h1>
+                    <p className="text-sm font-mono text-neutral-400 uppercase tracking-widest">Workspace: Main A // Session 442</p>
+                </div>
+
+                <div className="flex gap-4">
+                    <button className="px-6 py-2 border border-white/10 bg-[#111] hover:bg-[#1A1A1A] text-white font-mono text-xs uppercase tracking-wider transition-colors">
+                        Import
+                    </button>
+                    <button className="px-6 py-2 bg-primary text-black font-mono text-xs uppercase tracking-wider font-bold hover:brightness-110 flex items-center gap-2 transition-all shadow-primary-btn">
+                        <Plus size={16} /> New Project
+                    </button>
+                </div>
+            </div>
+
+            {/* Quick Access / Recent */}
+            <div className="mb-12">
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-display text-white">Recent Projects</h2>
+                    <button className="text-[10px] font-mono text-primary uppercase hover:underline">View All</button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <ProjectCard title="Neon Nights v3" type="Techno" date="Edited 2h ago" color="bg-blue-500" />
+                    <ProjectCard title="Deep Space 9" type="Ambient" date="Edited 5h ago" color="bg-purple-500" />
+                    <ProjectCard title="Acid Rain" type="House" date="Edited 1d ago" color="bg-primary" />
+
+                    {/* Create New Placeholder */}
+                    <div className="aspect-video border border-dashed border-white/10 rounded-sm flex flex-col items-center justify-center gap-3 text-neutral-600 hover:text-white hover:border-white/30 transition-all cursor-pointer group">
+                        <div className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-colors">
+                            <Plus size={20} />
+                        </div>
+                        <span className="text-xs font-mono uppercase tracking-widest">Empty Slot</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* AI Generation Layer */}
+            <div>
+                <h2 className="text-xl font-display text-white mb-6">Discovery Engine</h2>
+                <div className="h-64 border border-white/10 bg-[#0A0A0A] rounded-sm relative overflow-hidden flex items-center justify-center group cursor-pointer">
+                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1614149162883-504ce4d13909?q=80&w=2574&auto=format&fit=crop')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity grayscale group-hover:grayscale-0" />
+                    <div className="relative z-10 text-center">
+                        <h3 className="text-3xl font-display font-bold text-white mb-2">START NEW GENERATION</h3>
+                        <p className="text-xs font-mono text-neutral-400">AI-Powered Stem Separation & Composition</p>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Dashboard;

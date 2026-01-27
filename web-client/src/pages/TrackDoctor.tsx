@@ -23,9 +23,16 @@ export default function TrackDoctor() {
 
     return (
         <div className="space-y-12 animate-in slide-in-from-bottom-6 duration-700">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-2">
+                <div>
+                    <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-2">TRACK <span className="text-neutral-600">DOCTOR</span></h1>
+                    <p className="text-sm font-mono text-neutral-400 uppercase tracking-widest">Workspace: Main A // Session 442</p>
+                </div>
+            </div>
             {/* Upload Section */}
             {!report && !analyzing && (
-                <div className="glass-card p-12 border-dashed border-2 flex flex-col items-center justify-center space-y-6 hover:glow-cyan transition-all duration-500 cursor-pointer text-center group" onClick={startAnalysis}>
+                <div className="glass-card p-12 border-dashed border-2 flex flex-col items-center justify-center space-y-6 hover:glow-neon transition-all duration-500 cursor-pointer text-center group" onClick={startAnalysis}>
                     <div className="p-6 bg-primary/10 rounded-full group-hover:scale-110 transition-transform">
                         <ArrowUpTrayIcon className="w-12 h-12 text-primary" />
                     </div>
@@ -93,7 +100,7 @@ export default function TrackDoctor() {
                         {report.map((metric: any, i: number) => (
                             <div
                                 key={metric.name}
-                                className={`glass-card p-6 transition-all duration-300 cursor-pointer ${activeMetric === i ? 'glow-cyan border-primary/40' : 'border-white/5 opacity-60'
+                                className={`glass-card p-6 transition-all duration-300 cursor-pointer ${activeMetric === i ? 'glow-neon border-primary/40' : 'border-white/5 opacity-60'
                                     }`}
                                 onMouseEnter={() => setActiveMetric(i)}
                             >

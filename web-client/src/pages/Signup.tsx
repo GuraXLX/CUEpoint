@@ -1,154 +1,125 @@
-import { useState, useEffect } from 'react';
-import { Logo } from '../components/Logo';
-import {
-    EyeIcon,
-    EyeSlashIcon,
-    ExclamationTriangleIcon,
-} from '@heroicons/react/24/outline';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import AuthLayout from '../components/AuthLayout';
+import TerminalInput from '../components/TerminalInput';
+import { motion } from 'framer-motion';
 
-export default function Signup() {
-    const [username, setUsername] = useState('');
+const Signup: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [focus, setFocus] = useState<string | null>(null);
-    const [isCreating, setIsCreating] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        setIsLoaded(true);
-    }, []);
+    const navigate = useNavigate();
 
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsCreating(true);
+        setLoading(true);
         setError(null);
 
-        const { error: signUpError } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    username,
-                }
-            }
-        });
+        try {
+            const { error } = await supabase.auth.signUp({
+                email,
+                password,
+            });
 
-        if (signUpError) {
-            setError(signUpError.message);
-            setIsCreating(false);
-            return;
+            if (error) throw error;
+            navigate('/dashboard');
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
         }
-
-        setTimeout(() => {
-            window.location.href = '/dashboard';
-        }, 2500);
     };
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-background flex items-center justify-center p-6 font-sans">
-            {/* Generative Background */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <AuthLayout>
+            <div className="mb-8">
+                <h1 className="text-2xl font-semibold text-white mb-2 tracking-tight">Create Account</h1>
+                <p className="text-muted text-sm">Join the network for professional curation.</p>
             </div>
 
-            <div className={`relative z-10 w-full max-w-[440px] transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
+            <div className="grid grid-cols-2 gap-3 mb-8">
+                <button className="flex items-center justify-center gap-2 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-white text-sm font-medium">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
+                    </svg>
+                    <span>Google</span>
+                </button>
+                <button className="flex items-center justify-center gap-2 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-white text-sm font-medium">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.05 20.28c-.98.95-2.05 1.72-3.17 1.72-1.2 0-2.04-1.03-3.03-1.73-.85-.63-2.18-1.55-3.66-1.55-1.56.03-2.9.83-3.8 2.31.25.13.51.27.78.43 1.95 1.17 3.56 2.14 5.67 2.14 1.74 0 3.33-.92 4.46-2.05.62-.62 1.18-1.32 1.68-2.09-.45-.33-.92-.68-1.4-1.07-.17-.11-.35-.22-.53-.33zM12.03 7.25c-.15 2.23 1.66 4.07 3.74 4.25.29-2.33-1.44-4-3.74-4.25zm-2.95 2.5c-2.38.25-4.14 2.26-4.14 4.79 0 3.58 2.81 7.15 6 7.15 1.63 0 2.5-.34 3.52-.92.93.53 1.83.89 3.03.89 2.53 0 4.67-2.34 4.67-4.94 0-2.42-1.63-4.32-3.84-4.59-1.33-.16-2.58.62-3.9 1.77-1.38-1.46-3.33-4.33-5.34-4.15z" />
+                    </svg>
+                    <span>Apple</span>
+                </button>
+            </div>
 
-                <div className={`glass-card p-10 bg-navy/60 backdrop-blur-[20px] border border-white/10 rounded-[24px] ${isCreating ? 'glow-cyan' : ''}`}>
+            <div className="relative mb-8">
+                <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-white/5"></div>
+                </div>
+                <div className="relative flex justify-center text-xs">
+                    <span className="bg-[#050505] px-2 text-muted/40">Or register with email</span>
+                </div>
+            </div>
 
-                    <div className="flex flex-col items-center mb-10">
-                        <Logo size={48} />
-                        <h2 className="mt-6 text-2xl font-black uppercase tracking-tighter text-white">Initialize Hub</h2>
-                        <p className="text-[10px] text-muted font-bold tracking-[0.3em] uppercase mt-2">Activation Sequence v1.0.4</p>
+            <form onSubmit={handleSignup} className="space-y-4">
+                <div className="space-y-4">
+                    <TerminalInput
+                        label="Email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        placeholder="producer@studio.com"
+                    />
+
+                    <TerminalInput
+                        label="Password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        placeholder="Create secure password"
+                    />
+                </div>
+
+                <div className="flex items-start gap-2 text-xs text-muted/70 group py-2">
+                    <input type="checkbox" required className="mt-0.5 form-checkbox bg-transparent border-white/20 rounded text-primary focus:ring-primary/20 focus:ring-offset-0" />
+                    <span className="leading-5">I agree to the <a href="#" className="text-white hover:text-primary">Terms</a> and <a href="#" className="text-white hover:text-primary">Privacy Policy</a></span>
+                </div>
+
+                {error && (
+                    <div className="p-3 border border-red-500/30 bg-red-500/5 text-red-500 text-xs rounded">
+                        {error}
                     </div>
+                )}
 
-                    {/* Error State */}
-                    {error && (
-                        <div className="mb-6 p-4 bg-accent/10 border border-accent/20 rounded-xl flex items-center gap-3 animate-in slide-in-from-top-2">
-                            <ExclamationTriangleIcon className="w-5 h-5 text-accent" />
-                            <p className="text-xs font-bold text-accent uppercase tracking-wider">{error}</p>
-                        </div>
+                <motion.button
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-white hover:bg-gray-100 text-black font-semibold py-3 rounded-lg transition-all shadow-lg flex items-center justify-center gap-2"
+                >
+                    {loading ? (
+                        <span className="text-sm">Creating...</span>
+                    ) : (
+                        <span className="text-sm">Create Account</span>
                     )}
+                </motion.button>
 
-                    <form onSubmit={handleSignup} className="space-y-8">
-                        <div className="relative group">
-                            <input
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                onFocus={() => setFocus('username')}
-                                onBlur={() => setFocus(null)}
-                                required
-                                className="w-full bg-transparent border-b border-white/10 py-2 outline-none transition-all focus:border-primary text-white"
-                            />
-                            <label className={`absolute left-0 transition-all pointer-events-none uppercase tracking-widest ${focus === 'username' || username ? '-top-6 text-[10px] text-primary font-bold' : 'top-2 text-sm text-muted'}`}>
-                                Producer Handle
-                            </label>
-                            <div className={`absolute bottom-0 left-0 h-[2px] bg-primary transition-all duration-500 ${focus === 'username' ? 'w-full shadow-cyan-glow' : 'w-0'}`} />
-                        </div>
-
-                        <div className="relative group">
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                onFocus={() => setFocus('email')}
-                                onBlur={() => setFocus(null)}
-                                required
-                                className="w-full bg-transparent border-b border-white/10 py-2 outline-none transition-all focus:border-primary text-white"
-                            />
-                            <label className={`absolute left-0 transition-all pointer-events-none uppercase tracking-widest ${focus === 'email' || email ? '-top-6 text-[10px] text-primary font-bold' : 'top-2 text-sm text-muted'}`}>
-                                Signal Address
-                            </label>
-                            <div className={`absolute bottom-0 left-0 h-[2px] bg-primary transition-all duration-500 ${focus === 'email' ? 'w-full shadow-cyan-glow' : 'w-0'}`} />
-                        </div>
-
-                        <div className="relative group">
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                onFocus={() => setFocus('password')}
-                                onBlur={() => setFocus(null)}
-                                required
-                                className="w-full bg-transparent border-b border-white/10 py-2 pr-10 outline-none transition-all focus:border-primary text-white"
-                            />
-                            <label className={`absolute left-0 transition-all pointer-events-none uppercase tracking-widest ${focus === 'password' || password ? '-top-6 text-[10px] text-primary font-bold' : 'top-2 text-sm text-muted'}`}>
-                                Security Key
-                            </label>
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-0 top-2 text-muted hover:text-primary transition-colors"
-                            >
-                                {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
-                            </button>
-                            <div className={`absolute bottom-0 left-0 h-[2px] bg-primary transition-all duration-500 ${focus === 'password' ? 'w-full shadow-cyan-glow' : 'w-0'}`} />
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={isCreating}
-                            className="w-full py-4 bg-primary text-background font-black uppercase tracking-widest rounded-xl shadow-cyan-glow hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
-                        >
-                            {isCreating ? 'Synchronizing...' : 'Establish Connection'}
-                        </button>
-                    </form>
-
-                    <div className="mt-10 text-center">
-                        <p className="text-xs text-muted">
-                            Already have an active hub? <a href="/login" className="text-primary font-bold hover:underline">Connect Here</a>
-                        </p>
-                    </div>
+                <div className="text-center pt-2">
+                    <p className="text-muted text-xs">
+                        Already have an account?{' '}
+                        <Link to="/login" className="text-white hover:text-primary transition-colors font-medium">
+                            Sign In
+                        </Link>
+                    </p>
                 </div>
-
-                <div className="mt-8 text-center text-[10px] text-muted/40 font-bold uppercase tracking-widest">
-                    By initializing, you agree to the Neural Network Protocol.
-                </div>
-            </div>
-        </div>
+            </form>
+        </AuthLayout>
     );
-}
+};
+
+export default Signup;

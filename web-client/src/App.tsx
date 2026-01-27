@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import Layout from './components/Layout'
+import DashboardLayout from './components/DashboardLayout'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -17,20 +17,21 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
 
-                    {/* Protected Routes Wrapper */}
+                    {/* Protected Routes - Single Global Pro Layout */}
                     <Route
                         path="/*"
                         element={
-                            <Layout>
+                            <DashboardLayout>
                                 <Routes>
                                     <Route path="/dashboard" element={<Dashboard />} />
                                     <Route path="/setlist-architect" element={<SetlistArchitect />} />
                                     <Route path="/track-doctor" element={<TrackDoctor />} />
                                     <Route path="/discovery" element={<DiscoveryEngine />} />
                                     <Route path="/collab" element={<CollabHub />} />
-                                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                                    {/* Default to Dashboard */}
+                                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
                                 </Routes>
-                            </Layout>
+                            </DashboardLayout>
                         }
                     />
                 </Routes>

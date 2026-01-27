@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&family=JetBrains+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased font-sans transition-colors duration-300;
-    cursor: default;
+    @apply bg-[#050505] text-white antialiased font-sans selection:bg-primary/30 selection:text-black;
   }
 
   h1,
@@ -16,104 +15,54 @@
   h4,
   h5,
   h6 {
-    @apply font-display;
+    @apply font-display tracking-wide uppercase;
+    /* Barlow Condensed */
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Barlow Condensed', sans-serif;
   }
 }
 
 @layer components {
 
-  /* Glassmorphism System */
-  .glass-card {
-    @apply backdrop-blur-[20px] bg-navy/60 border border-white/10 rounded-2xl overflow-hidden shadow-2xl;
-    background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(10, 10, 15, 0.6) 100%);
+  /* Modern Audio Texture System */
+  .bg-noise {
+    position: relative;
   }
 
-  /* Glowing Borders & Shadows */
-  .glow-cyan {
-    @apply border-primary/40 shadow-cyan-glow;
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .glow-pink {
-    @apply border-accent/40 shadow-pink-glow;
+  /* Beatport Pro Glass - Sharper, cleaner */
+  .glass-panel {
+    @apply backdrop-blur-xl bg-[#0A0A0A]/80 border border-white/10 shadow-2xl;
   }
 
-  /* High-Impact Inputs (Floating Labes are handled in TSX via state) */
-  .input-signal {
-    @apply w-full bg-transparent border-b border-white/10 py-2 outline-none transition-all duration-300 focus:border-primary text-white;
+  /* Precision Borders */
+  .border-precision {
+    @apply border border-white/15;
   }
 
-  .input-signal-focus-line {
-    @apply absolute bottom-0 left-0 h-[2px] bg-primary transition-all duration-500 shadow-cyan-glow;
+  /* High-Impact Inputs (Modern Audio Vibe) */
+  .input-audio-modern {
+    @apply w-full bg-[#0F0F0F] border border-white/15 rounded-sm px-4 py-3 outline-none transition-all duration-300 focus:border-primary focus:bg-[#151515] text-white font-sans placeholder:text-white/20 text-sm;
   }
 
   /* CTAs & Buttons */
   .btn-primary {
-    @apply relative px-6 py-3 bg-primary text-background font-black uppercase tracking-widest rounded-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-cyan-glow overflow-hidden;
+    @apply relative px-8 py-3 bg-primary text-black font-display font-bold text-lg tracking-wider uppercase rounded-sm transition-all duration-200 hover:brightness-110 active:scale-[0.98] shadow-primary-btn;
   }
-
-  .btn-primary-acrylic {
-    @apply absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity;
-  }
-
-  .btn-outline-social {
-    @apply w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-muted transition-all duration-300 hover:border-primary hover:text-primary hover:bg-primary/5 hover:shadow-cyan-glow;
-  }
-
-  /* Layout Utilities */
-  .sidebar-link {
-    @apply flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 group;
-  }
-
-  .sidebar-link-active {
-    @apply bg-primary/10 text-primary glow-cyan border border-primary/20;
-  }
-}
-
-/* Custom Animations - "The Wow Factor" */
-@keyframes pulse-slow {
-
-  0%,
-  100% {
-    opacity: 0.8;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-}
-
-@keyframes spin-linear {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-linear 8s linear infinite;
-}
-
-/* Hide scrollbars but allow scrolling */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Background Wave Animation */
-.bg-wave-animated {
-  @apply animate-pulse;
-  transition: all 3s ease-in-out;
 }
