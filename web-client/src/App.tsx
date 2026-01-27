@@ -7,6 +7,7 @@ import SetlistArchitect from './pages/SetlistArchitect'
 import TrackDoctor from './pages/TrackDoctor'
 import DiscoveryEngine from './pages/DiscoveryEngine'
 import CollabHub from './pages/CollabHub'
+import Library from './pages/Library'
 import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                                     <Route path="/track-doctor" element={<TrackDoctor />} />
                                     <Route path="/discovery" element={<DiscoveryEngine />} />
                                     <Route path="/collab" element={<CollabHub />} />
+                                    <Route path="/library" element={<Library />} />
                                     {/* Default to Dashboard */}
                                     <Route path="*" element={<Navigate to="/dashboard" replace />} />
                                 </Routes>

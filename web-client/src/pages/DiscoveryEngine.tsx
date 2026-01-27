@@ -2,12 +2,96 @@ import { useState } from 'react';
 import { GlobeAltIcon, MagnifyingGlassIcon, AdjustmentsHorizontalIcon, PlayIcon } from '@heroicons/react/24/outline';
 
 const MOCK_MARKETPLACE = [
-    { id: 1, title: 'Quantum Drift', artist: 'Sub_Zero', genre: 'Industrial Techno', bpm: 128, score: 'A', energy: 92, price: 'FREE' },
-    { id: 2, title: 'Nebula', artist: 'Void Walker', genre: 'Melodic House', bpm: 122, score: 'A-', energy: 65, price: '$2.00' },
-    { id: 3, title: 'Static Pulse', artist: 'Circuit Soul', genre: 'Techno', bpm: 130, score: 'B+', energy: 88, price: '$5.00' },
-    { id: 4, title: 'Liquid Gold', artist: 'Aura', genre: 'Organic House', bpm: 118, score: 'A', energy: 45, price: '$3.50' },
-    { id: 5, title: 'The Architect', artist: 'Gura', genre: 'Peak Time Techno', bpm: 132, score: 'A+', energy: 98, price: 'FREE' },
-    { id: 6, title: 'Midnight Signal', artist: 'Neon Void', genre: 'Prog House', bpm: 124, score: 'A-', energy: 75, price: '$4.00' },
+    {
+        id: 1,
+        title: 'Quantum Drift',
+        artist: 'Sub_Zero',
+        genre: 'Industrial Techno',
+        bpm: 128,
+        score: 'A',
+        energy: 92,
+        price: 'FREE',
+        artwork: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 2,
+        title: 'Nebula',
+        artist: 'Void Walker',
+        genre: 'Melodic House',
+        bpm: 122,
+        score: 'A-',
+        energy: 65,
+        price: '$2.00',
+        artwork: 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 3,
+        title: 'Static Pulse',
+        artist: 'Circuit Soul',
+        genre: 'Techno',
+        bpm: 130,
+        score: 'B+',
+        energy: 88,
+        price: '$5.00',
+        artwork: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 4,
+        title: 'Liquid Gold',
+        artist: 'Aura',
+        genre: 'Organic House',
+        bpm: 118,
+        score: 'A',
+        energy: 45,
+        price: '$3.50',
+        artwork: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 5,
+        title: 'The Architect',
+        artist: 'Gura',
+        genre: 'Peak Time Techno',
+        bpm: 132,
+        score: 'A+',
+        energy: 98,
+        price: 'FREE',
+        artwork: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 6,
+        title: 'Midnight Signal',
+        artist: 'Neon Void',
+        genre: 'Prog House',
+        bpm: 124,
+        score: 'A-',
+        energy: 75,
+        price: '$4.00',
+        artwork: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 7, title: 'Cyber City', artist: 'Neon Glide', genre: 'Synthwave', bpm: 110, score: 'B+', energy: 60, price: '$1.99',
+        artwork: 'https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 8, title: 'Deep Space', artist: 'Galactic', genre: 'Ambient', bpm: 90, score: 'A', energy: 30, price: 'FREE',
+        artwork: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 9, title: 'Rhythm Sys', artist: 'Beat Mech', genre: 'Tech House', bpm: 126, score: 'A+', energy: 85, price: '$6.00',
+        artwork: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 10, title: 'Echo Chamber', artist: 'Dub Monitor', genre: 'Dub Techno', bpm: 118, score: 'B', energy: 55, price: '$2.50',
+        artwork: 'https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 11, title: 'Solar Wind', artist: 'Stellar', genre: 'Trance', bpm: 138, score: 'A-', energy: 95, price: '$3.99',
+        artwork: 'https://images.unsplash.com/photo-1532431149956-6a2c20847998?q=80&w=600&auto=format&fit=crop'
+    },
+    {
+        id: 12, title: 'Mainframe', artist: 'Binary', genre: 'Glitch', bpm: 140, score: 'B+', energy: 88, price: '$4.50',
+        artwork: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=600&auto=format&fit=crop'
+    }
 ];
 
 export default function DiscoveryEngine() {
@@ -74,45 +158,48 @@ export default function DiscoveryEngine() {
                     <div className="w-2 h-6 bg-accent rounded-full" />
                     <h2 className="text-xl font-bold uppercase tracking-widest text-white">Marketplace Signals</h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
                     {MOCK_MARKETPLACE.map((track) => (
-                        <div key={track.id} className="glass-card p-6 group hover:glow-neon transition-all duration-500 border-white/5 relative">
-                            <div className="flex justify-between items-start mb-6">
-                                <div className="p-3 bg-navy rounded-xl border border-white/5 group-hover:glow-neon transition-all">
-                                    <PlayIcon className="w-6 h-6 text-primary" />
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-xl font-black text-white leading-none">{track.score}</div>
-                                    <div className="text-[10px] font-bold text-muted uppercase mt-1">Grade</div>
-                                </div>
-                            </div>
+                        <div key={track.id} className="relative group overflow-hidden rounded-xl aspect-square border border-white/5 hover:border-primary/50 transition-all duration-300 shadow-lg cursor-pointer">
 
-                            <div className="mb-6">
-                                <h3 className="text-lg font-bold group-hover:text-primary transition-colors truncate">{track.title}</h3>
-                                <p className="text-sm text-muted">{track.artist}</p>
-                            </div>
+                            {/* Artwork */}
+                            <img
+                                src={track.artwork}
+                                alt={track.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-40"
+                            />
 
-                            <div className="grid grid-cols-2 gap-4 mb-6">
-                                <div className="bg-navy/60 p-2 rounded-lg text-center">
-                                    <div className="text-[10px] text-muted uppercase font-bold">BPM</div>
-                                    <div className="font-mono text-sm">{track.bpm}</div>
-                                </div>
-                                <div className="bg-navy/60 p-2 rounded-lg text-center">
-                                    <div className="text-[10px] text-muted uppercase font-bold">Energy</div>
-                                    <div className="font-mono text-sm">{track.energy}%</div>
+                            {/* Dark Overlay for Text Readability */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+
+                            {/* Top Badges (Always Visible) */}
+                            <div className="absolute top-2 right-2 z-20">
+                                <div className="bg-black/60 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-black text-white border border-white/10 shadow-sm">
+                                    {track.score}
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-between">
-                                <span className="font-bold text-lg">{track.price}</span>
-                                <button className="btn-primary py-2 px-4 text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                                    Acquire Signal
-                                </button>
+                            {/* Center Action (Hover Only) */}
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 transform scale-90 group-hover:scale-100">
+                                <div className="w-10 h-10 rounded-full bg-primary text-black flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                                    <PlayIcon className="w-5 h-5 ml-0.5" />
+                                </div>
                             </div>
 
-                            {/* Tag */}
-                            <div className="absolute top-4 right-16 px-2 py-0.5 bg-accent/10 border border-accent/20 rounded text-[9px] font-bold text-accent uppercase opacity-0 group-hover:opacity-100 transition-opacity">
-                                {track.genre}
+                            {/* Bottom Info (Always Visible but Shifts) */}
+                            <div className="absolute bottom-0 left-0 right-0 p-3 z-20 transition-transform duration-300 group-hover:-translate-y-1">
+                                <div className="flex justify-between items-end mb-1">
+                                    <div className="truncate pr-2">
+                                        <h3 className="text-sm font-bold text-white truncate drop-shadow-md leading-tight">{track.title}</h3>
+                                        <p className="text-[10px] text-gray-300 font-medium uppercase tracking-wider truncate">{track.artist}</p>
+                                    </div>
+                                </div>
+
+                                {/* Hover Extras */}
+                                <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-300 opacity-0 group-hover:opacity-100 flex items-center justify-between pt-2 border-t border-white/10 mt-2">
+                                    <span className="font-mono text-[10px] text-primary font-bold">{track.bpm} BPM</span>
+                                    <span className="text-xs font-bold text-white">{track.price}</span>
+                                </div>
                             </div>
                         </div>
                     ))}

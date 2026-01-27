@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutGrid, Disc, Mic2, Radio, Library, Settings, Zap } from 'lucide-react';
+import { LayoutGrid, Disc, Mic2, Radio, Library as LibraryIcon, Settings, Zap } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { clsx } from 'clsx';
 import Logo from './Logo';
@@ -37,7 +37,7 @@ const Sidebar: React.FC = () => {
                 <NavItem icon={Radio} label="Live" to="/collab" active={isActive('/collab')} />
                 <NavItem icon={Zap} label="Generate" to="/discovery" active={isActive('/discovery')} />
                 <div className="h-px w-10 mx-auto bg-white/10 my-4" />
-                <NavItem icon={Library} label="Library" to="/track-doctor" active={false} />
+                <NavItem icon={LibraryIcon} label="Library" to="/library" active={isActive('/library')} />
             </div>
 
             {/* Bottom Actions */}

@@ -35,6 +35,10 @@ class Track(Base):
     energy_level = Column(Float, nullable=True)
     genre = Column(String, nullable=True)
     
+    # Commerce
+    price = Column(Float, default=1.99) # Default track price
+    purchase_count = Column(Integer, default=0)
+    
     is_public = Column(Boolean, default=False)
     
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
@@ -102,3 +106,17 @@ class Message(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     sender = relationship("User", foreign_keys=[sender_id], back_populates="sent_messages")
     receiver = relationship("User", foreign_keys=[receiver_id], back_populates="received_messages")
+
+class Purchase(Base):
+    __tablename__ = "purchases"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    track_id = Column(Integer, ForeignKey("tracks.id"))
+    price_paid = Column(Float)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    
+    user = relationship("User", back_populates="purchases")
+    track = relationship("Track")
+
+# Update User relationship
+User.purchases = relationship("Purchase", back_populates="user")

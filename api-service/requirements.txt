@@ -12,3 +12,8 @@ redis
 minio
 requests
 pyjwt[crypto]
+librosa
+numpy
+mutagen
+scipy
+soundfile

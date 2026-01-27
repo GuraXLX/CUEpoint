@@ -95,7 +95,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 p-8 lg:p-12 max-w-7xl mx-auto w-full">
+                <main className={`flex-1 w-full mx-auto ${location.pathname.includes('setlist-architect') ? 'h-[calc(100vh-5rem)] p-0 max-w-none' : 'p-8 lg:p-12 max-w-7xl'}`}>
                     {children}
                 </main>
             </div>
